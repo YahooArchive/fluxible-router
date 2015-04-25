@@ -2,7 +2,7 @@
 
 ## Register a Route Store
 
-The library has a built-in [`RouteStore`](../api/RouteStore.md) that needs to be registered to your application:
+The library has a built-in [`RouteStore`](./api/RouteStore.md) that needs to be registered to your application:
 
 ```js
 // app.js
