@@ -31,7 +31,7 @@ $ npm install --save fluxible-router
 
 ```js
 var Fluxible = require('fluxible');
-var Router = require('fluxible-router');
+var Store = require('fluxible-router').RouteStore;
 var React = require('react');
 
 // Component
