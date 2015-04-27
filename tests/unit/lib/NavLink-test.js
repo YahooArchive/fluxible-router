@@ -101,6 +101,25 @@ describe('NavLink', function () {
             );
             expect(link.getDOMNode().getAttribute('class')).to.equal('active');
         });
+        it('should set active state with custom class and style', function () {
+            var link = ReactTestUtils.renderIntoDocument(
+                <MockAppComponent context={mockContext}>
+                    <NavLink routeName='foo' activeClass="bar" activeStyle={{color: 'red'}} />
+                </MockAppComponent>
+            );
+            expect(link.getDOMNode().getAttribute('class')).to.equal('bar');
+            expect(link.getDOMNode().getAttribute('style')).to.equal('color:red;');
+        });
+        it('should set the active state and keep the passed props', function () {
+            var link = ReactTestUtils.renderIntoDocument(
+                <MockAppComponent context={mockContext}>
+                    <NavLink routeName='foo' className='bar' activeClass="active2"
+                        activeStyle={{color: 'red'}} style={{background: 'blue'}} />
+                </MockAppComponent>
+            );
+            expect(link.getDOMNode().getAttribute('class')).to.equal('bar active2');
+            expect(link.getDOMNode().getAttribute('style')).to.equal('background:blue;color:red;');
+        });
         it('should not set active state if href does not match current route', function () {
             var navParams = {a: 1, b: 2};
             var link = ReactTestUtils.renderIntoDocument(
@@ -108,7 +127,7 @@ describe('NavLink', function () {
                     <NavLink routeName='fooAB' navParams={navParams} />
                 </MockAppComponent>
             );
-            expect(link.getDOMNode().getAttribute('class')).to.equal('');
+            expect(link.getDOMNode().getAttribute('class')).to.equal(null);
         });
     });
 
