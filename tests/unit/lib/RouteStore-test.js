@@ -55,10 +55,26 @@ describe('RouteStore', function () {
 
     describe('withoutStaticRoutes', function () {
         var routeStore;
+        var FooComponent = React.createClass({
+            render: function () {
+                return (<div>Foo!</div>);
+            }
+        });
+        var BarComponent = React.createClass({
+            render: function () {
+                return (<div>Bar!</div>);
+            }
+        });
         var routes = {
             foo: {
                 path: '/foo',
-                method: 'get'
+                method: 'get',
+                handler: FooComponent
+            },
+            bar: {
+                path: '/bar',
+                method: 'get',
+                handler: BarComponent
             }
         };
         beforeEach(function () {
@@ -95,6 +111,17 @@ describe('RouteStore', function () {
                     method: 'get'
                 });
                 expect(newStore.routes).to.deep.equal(routes);
+            });
+            it('should rehydrate with a rewriteen route correctly', function () {
+                var newStore = new StaticRouteStore();
+                newStore.rehydrate({
+                    isRewrite: true,
+                    rewriteRouteName: 'bar',
+                    currentUrl: '/foo',
+                    currentNavigate: { url: '/foo', method: 'get' },
+                    routes: routes
+                });
+                expect(newStore.getCurrentRoute().get('handler').displayName).to.equal('BarComponent');
             });
         });
     });
