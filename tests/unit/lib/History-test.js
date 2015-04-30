@@ -3,11 +3,11 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 /*globals describe,it,before,beforeEach */
-var History = require('../../../lib/History'),
-    expect = require('chai').expect,
-    _ = require('lodash'),
-    windowMock,
-    testResult;
+var History = require('../../../lib/History');
+var expect = require('chai').expect;
+var _ = require('lodash');
+var windowMock;
+var testResult;
 
 
 describe('History', function () {

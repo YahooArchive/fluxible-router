@@ -2,6 +2,7 @@
  * Copyright 2015, Yahoo! Inc.
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
+var React = require('react');
 var expect = require('chai').expect;
 var RouteStore = require('../../../').RouteStore;
 var StaticRouteStore = RouteStore.withStaticRoutes({
@@ -95,6 +96,54 @@ describe('RouteStore', function () {
                 });
                 expect(newStore.routes).to.deep.equal(routes);
             });
+        });
+    });
+
+    describe('rewriteRoute', function () {
+        var routeStore;
+        var FooComponent = React.createClass({
+            render: function () {
+                return (<div>Foo!</div>);
+            }
+        });
+        var BarComponent = React.createClass({
+            render: function () {
+                return (<div>Bar!</div>);
+            }
+        });
+        var routes = {
+            foo: {
+                path: '/foo',
+                method: 'get',
+                handler: FooComponent
+            },
+            bar: {
+                path: '/bar',
+                method: 'get',
+                handler: BarComponent
+            }
+        };
+        beforeEach(function () {
+            routeStore = new RouteStore();
+            routeStore._handleReceiveRoutes(routes);
+            routeStore._handleNavigateStart({
+                url: '/foo',
+                method: 'get'
+            });
+        });
+        it('should rewrite the current route', function () {
+            var CurrentRoute = routeStore.getCurrentRoute();
+            expect(CurrentRoute.get('handler').displayName).to.equal('FooComponent');
+            expect(CurrentRoute.get('url')).to.equal('/foo');
+
+            routeStore._handleRewriteRoute({
+                name: 'bar',
+                route: routes.bar
+            });
+
+            CurrentRoute = routeStore.getCurrentRoute();
+            expect(CurrentRoute.get('handler').displayName).to.equal('BarComponent');
+            expect(CurrentRoute.get('url')).to.equal('/foo');
         });
     });
 
