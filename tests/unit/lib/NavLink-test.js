@@ -38,7 +38,7 @@ describe('NavLink', function () {
         mockContext = createMockComponentContext({
             stores: [TestRouteStore]
         });
-        mockContext.getStore('RouteStore').handleNavigateStart({
+        mockContext.getStore('RouteStore')._handleNavigateStart({
             url: '/foo',
             method: 'GET'
         });
@@ -345,7 +345,7 @@ describe('NavLink', function () {
             expect(link.getDOMNode().getAttribute('href')).to.equal('/foo');
             expect(link.getDOMNode().textContent).to.equal('bar');
             expect(link.getDOMNode().getAttribute('class')).to.equal('active');
-            mockContext.getStore('RouteStore').handleNavigateStart({
+            mockContext.getStore('RouteStore')._handleNavigateStart({
                 url: '/bar',
                 method: 'GET'
             });
