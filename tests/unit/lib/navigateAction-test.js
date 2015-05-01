@@ -67,7 +67,7 @@ describe('navigateAction', function () {
             expect(mockContext.dispatchCalls[0].name).to.equal('NAVIGATE_START');
             expect(mockContext.dispatchCalls[0].payload.url).to.equal('/');
             expect(mockContext.dispatchCalls[1].name).to.equal('NAVIGATE_SUCCESS');
-            expect(mockContext.dispatchCalls[1].payload.url).to.equal('/');
+            expect(mockContext.dispatchCalls[1].payload.get('url')).to.equal('/');
             done();
         });
     });
@@ -84,7 +84,7 @@ describe('navigateAction', function () {
             expect(route.toJS().query).to.eql({foo: 'bar', a: ['b', 'c'], bool: null}, 'query added to route payload for NAVIGATE_START' + JSON.stringify(route));
             expect(mockContext.dispatchCalls[1].name).to.equal('NAVIGATE_SUCCESS');
             route = mockContext.dispatchCalls[1].payload;
-            expect(route.url).to.equal(url);
+            expect(route.get('url')).to.equal(url);
             done();
         });
     });
@@ -105,7 +105,7 @@ describe('navigateAction', function () {
             expect(err).to.equal(undefined);
             expect(mockContext.dispatchCalls.length).to.equal(2);
             expect(mockContext.dispatchCalls[1].name).to.equal('NAVIGATE_SUCCESS');
-            expect(mockContext.dispatchCalls[1].payload.url).to.equal('/action');
+            expect(mockContext.dispatchCalls[1].payload.get('url')).to.equal('/action');
             expect(mockContext.executeActionCalls.length).to.equal(1);
             expect(mockContext.executeActionCalls[0].action).to.equal(routes.action.action);
             expect(mockContext.executeActionCalls[0].payload.get('url')).to.equal('/action');
@@ -120,7 +120,7 @@ describe('navigateAction', function () {
             expect(err).to.equal(undefined);
             expect(mockContext.dispatchCalls.length).to.equal(2);
             expect(mockContext.dispatchCalls[1].name).to.equal('NAVIGATE_SUCCESS');
-            expect(mockContext.dispatchCalls[1].payload.url).to.equal('/string');
+            expect(mockContext.dispatchCalls[1].payload.get('url')).to.equal('/string');
             expect(mockContext.executeActionCalls.length).to.equal(1);
             expect(mockContext.executeActionCalls[0].action).to.equal(fooAction);
             expect(mockContext.executeActionCalls[0].payload.get('url')).to.equal('/string');
@@ -135,7 +135,7 @@ describe('navigateAction', function () {
             expect(err).to.be.an('object');
             expect(mockContext.dispatchCalls.length).to.equal(2);
             expect(mockContext.dispatchCalls[1].name).to.equal('NAVIGATE_FAILURE');
-            expect(mockContext.dispatchCalls[1].payload.url).to.equal('/fail');
+            expect(mockContext.dispatchCalls[1].payload.message).to.equal(err.message);
             done();
         });
     });
@@ -171,7 +171,7 @@ describe('navigateAction', function () {
             expect(mockContext.dispatchCalls[0].name).to.equal('NAVIGATE_START');
             expect(mockContext.dispatchCalls[0].payload.url).to.equal('/post');
             expect(mockContext.dispatchCalls[1].name).to.equal('NAVIGATE_SUCCESS');
-            expect(mockContext.dispatchCalls[1].payload.url).to.equal('/post');
+            expect(mockContext.dispatchCalls[1].payload.get('url')).to.equal('/post');
             done();
         });
     });

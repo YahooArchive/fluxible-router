@@ -11,6 +11,8 @@ These props will be passed to your component when a `RouteStore` change is emitt
 | Prop | Description |
 |:-----|:------------|
 | `currentNavigate` | The current payload received when `NAVIGATE_START` is dispatched. |
-| `currentRoute` | The config object from the matched route. |
-| `isActive` | A shortcut to `RouteStore.makePath`. See: [`RouteStore`](RouteStore.md). |
+| `currentNavigateError` | An object representing a navigation error. Note: this is not an `Error` object, it will only contain `message` and `statusCode` properties. |
+| `isNavigateComplete` | A boolean representing if the `navigateAction` has completed. Set to `true` after `NAVIGATE_SUCCESS` or `NAVIGATE_FAILURE`. |
+| `currentRoute` | The config object from the matched route (immutable object). |
+| `isActive` | A shortcut to `RouteStore.isActive`. See: [`RouteStore`](RouteStore.md). |
 | `makePath` | A shortcut to `RouteStore.makePath`. See: [`RouteStore`](RouteStore.md). |
