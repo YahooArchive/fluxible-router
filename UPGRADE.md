@@ -2,11 +2,11 @@
 
 ## `flux-router-component` to `fluxible-router`
 
-Be sure to read the [quick start doc](docs/api/quick-start.md). Here we'll be covering the logistical aspects of updating existing apps.
+Be sure to read the [quick start doc](https://github.com/yahoo/fluxible-router/blob/master/docs/quick-start.md). Here we'll be covering the logistical aspects of updating existing apps.
 
 ### No more mixins
 
-The mixin we had in `flux-router-component` has been retired in favor of higher-order components. Once a component is wrapped via `handleRoute` (or `handleHistory` which internally uses `handleRoute`) it will be passed props when navigation actions are triggered. See the [`handleRoute` docs](docs/api/handleRoute.md) for details.
+The mixin we had in `flux-router-component` has been retired in favor of higher-order components. Once a component is wrapped via `handleRoute` (or `handleHistory` which internally uses `handleRoute`) it will be passed props when navigation actions are triggered. See the [`handleRoute` docs](https://github.com/yahoo/fluxible-router/blob/master/docs/api/handleRoute.md) for details.
 
 ### Update `NavLink` imports
 
