@@ -17,7 +17,7 @@ describe('RouteStore', function () {
         var routeStore;
         beforeEach(function () {
             routeStore = new StaticRouteStore();
-            routeStore.handleNavigateStart({
+            routeStore._handleNavigateStart({
                 url: '/foo',
                 method: 'get'
             });
@@ -47,7 +47,7 @@ describe('RouteStore', function () {
                     url: '/foo',
                     method: 'get'
                 });
-                expect(newStore.routes).to.equal(null);
+                expect(newStore._routes).to.equal(null);
             });
         });
     });
@@ -62,8 +62,8 @@ describe('RouteStore', function () {
         };
         beforeEach(function () {
             routeStore = new RouteStore();
-            routeStore.handleReceiveRoutes(routes);
-            routeStore.handleNavigateStart({
+            routeStore._handleReceiveRoutes(routes);
+            routeStore._handleNavigateStart({
                 url: '/foo',
                 method: 'get'
             });
@@ -93,7 +93,7 @@ describe('RouteStore', function () {
                     url: '/foo',
                     method: 'get'
                 });
-                expect(newStore.routes).to.deep.equal(routes);
+                expect(newStore._routes).to.deep.equal(routes);
             });
         });
     });
