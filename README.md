@@ -18,6 +18,7 @@ $ npm install --save fluxible-router
 
  * [Quick Start](https://github.com/yahoo/fluxible-router/blob/master/docs/quick-start.md)
  * [API](https://github.com/yahoo/fluxible-router/blob/master/docs/api/README.md)
+ * [Upgrade Guide](https://github.com/yahoo/fluxible-router/blob/master/UPGRADE.md)
 
 ## Features
 
@@ -26,43 +27,6 @@ $ npm install --save fluxible-router
  * Higher order components for handling [history](https://github.com/yahoo/fluxible-router/blob/master/docs/api/handleHistory.md) and [routes](https://github.com/yahoo/fluxible-router/blob/master/docs/api/handleRoute.md)
  * [`navigateAction`](https://github.com/yahoo/fluxible-router/blob/master/docs/api/navigateAction.md) for changing routes
  * Updated for React 0.13
-
-## Usage
-
-```js
-var Fluxible = require('fluxible');
-var Router = require('fluxible-router');
-var React = require('react');
-
-// Component
-var App = React.createClass({
-    mixins: [Fluxible.FluxibleMixin], // Calls onChange when storeListeners emit change
-    statics: {
-        storeListeners: [Store]
-    },
-    getInitialState: function () {
-        return this.getStore(Store).getState();
-    },
-    onChange: function () {
-        this.setState(this.getStore(Store).getState());
-    },
-    render: function () {
-        return <span>{this.state.foo}</span>
-    }
-});
-
-// App
-var fluxibleApp = new Fluxible({
-    component: App
-});
-fluxibleApp.registerStore(Store);
-
-// Bootstrap
-var context = fluxibleApp.createContext();
-context.executeAction(action, 'bar', function () {
-    console.log(React.renderToString(context.createElement()));
-});
-```
 
 ## Required Polyfills
 
