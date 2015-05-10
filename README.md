@@ -1,10 +1,10 @@
 # Fluxible Router
 
-[![npm version](https://img.shields.io/npm/v/fluxible-router.svg?style=flat-square)](https://www.npmjs.com/package/fluxible-router)
-[![Build Status](https://img.shields.io/travis/yahoo/fluxible-router.svg?style=flat-square)](https://travis-ci.org/yahoo/fluxible-router)
-[![Coverage Status](https://img.shields.io/coveralls/yahoo/fluxible-router.svg?style=flat-square)](https://coveralls.io/r/yahoo/fluxible-router?branch=master)
-[![Dependency Status](https://img.shields.io/david/yahoo/fluxible-router.svg?style=flat-square)](https://david-dm.org/yahoo/fluxible-router)
-[![devDependency Status](https://img.shields.io/david/dev/yahoo/fluxible-router.svg?style=flat-square)](https://david-dm.org/yahoo/fluxible-router#info=devDependencies)
+[![NPM version](https://badge.fury.io/js/fluxible-router.svg)](http://badge.fury.io/js/fluxible-router)
+[![Build Status](https://img.shields.io/travis/yahoo/fluxible-router.svg)](https://travis-ci.org/yahoo/fluxible-router)
+[![Coverage Status](https://img.shields.io/coveralls/yahoo/fluxible-router.svg)](https://coveralls.io/r/yahoo/fluxible-router?branch=master)
+[![Dependency Status](https://img.shields.io/david/yahoo/fluxible-router.svg)](https://david-dm.org/yahoo/fluxible-router)
+[![devDependency Status](https://img.shields.io/david/dev/yahoo/fluxible-router.svg)](https://david-dm.org/yahoo/fluxible-router#info=devDependencies)
 
 Isomorphic Flux routing for applications built with [Fluxible](https://github.com/yahoo/fluxible).
 
