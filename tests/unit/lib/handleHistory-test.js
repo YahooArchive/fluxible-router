@@ -179,6 +179,31 @@ describe ('handleHistory', function () {
                 done();
             }, 10);
         });
+        describe('window.onbeforeunload', function () {
+            beforeEach(function () {
+                global.window.confirm = function () { return false; };
+                global.window.onbeforeunload = function () {
+                    return 'this is a test';
+                };
+            });
+
+            it ('does not dispatch navigate event if there is a window.onbeforeunload method that the user does not confirm', function (done) {
+                var routeStore = mockContext.getStore('RouteStore');
+                routeStore._handleNavigateStart({url: '/the_path_from_history', method: 'GET'});
+                MockAppComponent = provideContext(handleHistory(MockAppComponent, {
+                    historyCreator: function () {
+                        return historyMock('/foo');
+                    }
+                }));
+                ReactTestUtils.renderIntoDocument(
+                    <MockAppComponent context={mockContext} />
+                );
+                window.setTimeout(function() {
+                    expect(testResult.dispatch).to.equal(undefined, JSON.stringify(testResult.dispatch));
+                    done();
+                }, 10);
+            });
+        });
     });
 
     describe('componentWillUnmount()', function () {
