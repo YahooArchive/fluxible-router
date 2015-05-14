@@ -11,3 +11,4 @@
     yoda: 0
     no-alert: false
     new-cap: false
+    no-empty-class: 0
