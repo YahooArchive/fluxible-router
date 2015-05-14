@@ -254,6 +254,28 @@ describe('NavLink', function () {
             }, 10);
         });
 
+        describe('window.onbeforeunload', function () {
+            beforeEach(function () {
+                global.window.confirm = function () { return false; };
+                global.window.onbeforeunload = function () {
+                    return 'this is a test';
+                };
+            });
+
+            it ('should not call context.executeAction when a user does not confirm the onbeforeunload method', function (done) {
+                var link = ReactTestUtils.renderIntoDocument(
+                    <MockAppComponent context={mockContext}>
+                        <NavLink href='/foo' followLink={false} />
+                    </MockAppComponent>
+                );
+                ReactTestUtils.Simulate.click(link.getDOMNode(), {button: 0});
+                window.setTimeout(function () {
+                    expect(mockContext.executeActionCalls.length).to.equal(0);
+                    done();
+                }, 10);
+            });
+        });
+
         it('should throw if context not available', function () {
             expect(function () {
                 try{
