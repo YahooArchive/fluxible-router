@@ -2,7 +2,7 @@
 
 The `navigateAction` is a Fluxible action that dispatches `CHANGE_ROUTE_*` events that the [`RouteStore`](RouteStore.md) handles.
 
-`navigateAction` will load a new route and update the URL of your application. You can call this action directly to update the URL of your application. It is also invoked indirectly when a user clicks on a [`NavLink`](./navlink.md).
+`navigateAction` will load a new route and update the URL of your application. You can call this action directly to update the URL of your application. It is also invoked indirectly when a user clicks on a [`NavLink`](NavLink.md).
 
 `navigateAction` expects a `{method, url}` object as a payload, where `method` is the HTTP method used to retrieve the URL (e.g. 'get'.)
 
