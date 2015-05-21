@@ -6,7 +6,7 @@
 
 If no matching route is found, `navigateAction` will call the callback with an error where `err.status` is set to 404.
 
-If a route is successfully matched, `navigateAction` will first dispatch a `CHANGE_ROUTE_START` event, with route data as the payload (see below).  `navigateAction` will then try to find an action associated with the route from the route config; this can either be an action function or the name of an action function (retrieved with `context.getAction(name)`.)  If an action is found, it is executed, with route data as the payload.  `navigateAction` finally will dispatch a `CHANGE_ROUTE_SUCCESS` event, or `CHANGE_ROUTE_FAILURE` event if the route's action returns an error.
+If a route is successfully matched, `navigateAction` will first dispatch a `NAVIGATE_START` event, with route data as the payload (see below).  `navigateAction` will then try to find an action associated with the route from the route config; this can either be an action function or the name of an action function (retrieved with `context.getAction(name)`.)  If an action is found, it is executed, with route data as the payload.  `navigateAction` finally will dispatch a `NAVIGATE_SUCCESS` event, or `NAVIGATE_FAILURE` event if the route's action returns an error.
 
 ## Route Data
 
