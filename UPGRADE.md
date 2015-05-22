@@ -36,6 +36,14 @@ Should now be:
 this.props.currentRoute.get('url')
 ```
 
+### Action name changes
+
+The following action names were changed:
+
+- `CHANGE_ROUTE_START` -> `NAVIGATE_START`
+- `CHANGE_ROUTE_SUCCESS` -> `NAVIGATE_SUCCESS`
+- `CHANGE_ROUTE_FAILURE` -> `NAVIGATE_FAILURE`
+
 ### Stores
 
 Previously, keeping track of navigation and route changes was done by implementing an `ApplicationStore` or a `PageStore` yourself. We experimented with two approaches.
