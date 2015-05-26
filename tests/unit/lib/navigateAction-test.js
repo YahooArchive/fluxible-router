@@ -144,7 +144,7 @@ describe('navigateAction', function () {
         navigateAction(mockContext, {
             url: '/404'
         }, function (err) {
-            expect(err).to.be.an('object');
+            expect(err).to.be.instanceof(Error);
             expect(err.statusCode).to.equal(404);
             done();
         });
@@ -155,7 +155,7 @@ describe('navigateAction', function () {
             url: '/post',
             method: 'get'
         }, function (err) {
-            expect(err).to.be.an('object');
+            expect(err).to.be.instanceof(Error);
             expect(err.statusCode).to.equal(404);
             done();
         });
