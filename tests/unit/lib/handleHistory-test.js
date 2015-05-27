@@ -342,7 +342,7 @@ describe ('handleHistory', function () {
             ReactTestUtils.renderIntoDocument(
                 <MockAppComponent context={mockContext} />
             );
-            routeStore._handleNavigateStart({url: '/bar', method: 'GET', type: 'popstate'});
+            routeStore._handleNavigateStart({url: '/foo#hash1', method: 'GET', type: 'popstate'});
             expect(testResult.pushState).to.equal(undefined);
             expect(testResult.scrollTo).to.eql({x: 12, y: 200});
         });
@@ -361,7 +361,6 @@ describe ('handleHistory', function () {
             routeStore._handleNavigateStart({url: '/bar', method: 'GET', type: 'popstate'});
             expect(testResult.pushState).to.equal(undefined);
             expect(testResult.scrollTo).to.eql(undefined);
-
         });
         it ('update with different route, navigate.type=click, with params', function () {
             var routeStore = mockContext.getStore('RouteStore');
