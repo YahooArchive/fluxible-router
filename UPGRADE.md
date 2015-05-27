@@ -36,6 +36,15 @@ Should now be:
 this.props.currentRoute.get('url')
 ```
 
+This also affects actions that are called from `navigateAction`. They will also receive a payload that is the immutable route object:
+
+```js
+module.exports = function myAction(context, payload, callback) {
+    var params = payload.get('params');
+    //...
+}
+```
+
 ### Action name changes
 
 The following action names were changed:
