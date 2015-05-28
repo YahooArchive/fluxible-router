@@ -88,6 +88,23 @@ describe ('handleHistory', function () {
         mockery.disable();
     });
 
+    describe('statics', function () {
+        it('should hoist non-react statics to wrapper', function () {
+            var App = React.createClass({
+                displayName: 'Child',
+                statics: {
+                    initAction: function () {}
+                },
+                render: function () {
+                    return null;
+                }
+            });
+            var Wrapper = handleHistory(App);
+            expect(Wrapper.displayName).to.not.equal(App.displayName);
+            expect(Wrapper.initAction).to.be.a('function');
+        });
+    });
+
     describe('render', function () {
         it('should pass the currentRoute as prop to child', function () {
             var rendered = false;
