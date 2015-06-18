@@ -1,5 +1,8 @@
 .coveralls.yml
-.idea
+.eslintrc
+.npmignore
+.travisyml
+/.idea/
 /artifacts/
 /docs/
 /examples/
