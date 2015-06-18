@@ -8,7 +8,6 @@ var NavLink;
 var ReactTestUtils;
 var jsdom = require('jsdom');
 var expect = require('chai').expect;
-var assert = require('chai').assert;
 var onClickMock;
 var testResult;
 var MockAppComponent;
