@@ -149,6 +149,23 @@ describe('NavLink', function () {
                 done();
             }, 10);
         });
+        it ('stopPropagation stops event propagation', function (done) {
+            var propagateFail = function(e) { 
+                expect(e.isPropagationStopped()).to.eql(true); 
+            };
+            var navParams = {a: 1, b: true};
+            var link = ReactTestUtils.renderIntoDocument(
+                    <MockAppComponent context={mockContext} onClick={propagateFail}>
+                        <NavLink href='/foo' stopPropagation={true} navParams={navParams} />
+                    </MockAppComponent>
+            );
+            ReactTestUtils.Simulate.click(link.getDOMNode(), {button: 0});
+            window.setTimeout(function () {
+                expect(mockContext.executeActionCalls.length).to.equal(1);
+                expect(mockContext.executeActionCalls[0].action).to.equal(navigateAction);
+                done();
+            }, 10);
+        });
         it('context.executeAction called for relative urls', function (done) {
             var navParams = {a: 1, b: true};
             var link = ReactTestUtils.renderIntoDocument(

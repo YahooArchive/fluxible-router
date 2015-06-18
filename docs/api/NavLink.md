@@ -13,6 +13,7 @@ in navigation events.
 | followLink | boolean, default to false | If set to true, client side navigation will be disabled.  NavLink will just act like a regular anchor link. |
 | replaceState | boolean, default to false | If set to true, replaceState is being used instead of pushState |
 | preserveScrollPosition | boolean, default to false | If set to true, the page will maintain its scroll position on route change. |
+| stopPropagation | boolean, default to false | If set to true, the click event will not be propagated beyond the NavLink |
 
 
 ## Example Usage
