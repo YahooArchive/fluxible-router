@@ -1,4 +1,7 @@
+.coveralls.yml
+.idea
 /artifacts/
+/docs/
 /examples/
 /tests/
 /build/
