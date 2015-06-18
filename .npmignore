@@ -1,4 +1,10 @@
+.coveralls.yml
+.eslintrc
+.npmignore
+.travisyml
+/.idea/
 /artifacts/
+/docs/
 /examples/
 /tests/
 /build/
