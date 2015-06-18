@@ -8,6 +8,7 @@ var NavLink;
 var ReactTestUtils;
 var jsdom = require('jsdom');
 var expect = require('chai').expect;
+var assert = require('chai').assert;
 var onClickMock;
 var testResult;
 var MockAppComponent;
@@ -250,6 +251,22 @@ describe('NavLink', function () {
                 expect(mockContext.executeActionCalls[0].action).to.equal(navigateAction);
                 expect(mockContext.executeActionCalls[0].payload.type).to.equal('click');
                 expect(mockContext.executeActionCalls[0].payload.url).to.equal('/foo');
+                done();
+            }, 10);
+        });
+        it ('stopPropagation stops event propagation', function (done) {
+            var propagateFail = function() { assert.fail(false, true, 'Expected propagation to stop'); };
+            var link = ReactTestUtils.renderIntoDocument(
+                <MockAppComponent context={mockContext}>
+                    <span onClick={propagateFail}>
+                        <NavLink href='/foo' stopPropagation={true} />
+                    </span>
+                </MockAppComponent>
+            );
+            ReactTestUtils.Simulate.click(link.getDOMNode(), {button: 0});
+            window.setTimeout(function () {
+                expect(mockContext.executeActionCalls.length).to.equal(1);
+                expect(mockContext.executeActionCalls[0].action).to.equal(navigateAction);
                 done();
             }, 10);
         });
