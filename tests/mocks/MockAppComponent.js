@@ -4,7 +4,7 @@
  */
 'use strict';
 var React = require('react/addons');
-var provideContext = require('fluxible/addons/provideContext');
+var provideContext = require('fluxible-addons-react/provideContext');
 var handleHistory = require('../../lib/handleHistory');
 
 var MockAppComponent = React.createClass({

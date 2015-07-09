@@ -72,7 +72,7 @@ describe('handleHistory', function () {
         global.navigator = global.window.navigator;
         global.window.scrollTo = scrollToMock;
         React = require('react');
-        provideContext = require('fluxible/addons/provideContext');
+        provideContext = require('fluxible-addons-react/provideContext');
         handleHistory = require('../../../').handleHistory;
         MockAppComponent = require('../../mocks/MockAppComponent').UnwrappedMockAppComponent;
         ReactTestUtils = React.addons.TestUtils;
