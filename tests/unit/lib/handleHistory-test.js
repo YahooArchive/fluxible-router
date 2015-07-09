@@ -2,7 +2,7 @@
  * Copyright 2015, Yahoo! Inc.
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
-/*globals describe,it,before,beforeEach */
+/*globals describe,it,before,beforeEach,afterEach,window,document,navigator */
 var mockery = require('mockery');
 var expect = require('chai').expect;
 var jsdom = require('jsdom');
@@ -16,7 +16,8 @@ var TestRouteStore = RouteStore.withStaticRoutes({
     foo: { path: '/foo', method: 'get' },
     fooA: { path: '/foo/:a', method: 'get' },
     fooAB: { path: '/foo/:a/:b', method: 'get' },
-    pathFromHistory: { path: '/the_path_from_history', method: 'get' }
+    pathFromHistory: { path: '/the_path_from_history', method: 'get' },
+    unicode: { path: 'föö', method: 'get' }
 });
 
 var testResult = {};
@@ -55,7 +56,7 @@ var scrollToMock = function (x, y) {
     testResult.scrollTo = {x: x, y: y};
 };
 
-describe ('handleHistory', function () {
+describe('handleHistory', function () {
     var mockContext;
     var provideContext;
     var handleHistory;
@@ -130,7 +131,7 @@ describe ('handleHistory', function () {
     });
 
     describe('componentDidMount()', function () {
-        it ('listen to popstate event', function () {
+        it('listen to popstate event', function () {
             MockAppComponent = provideContext(handleHistory(MockAppComponent));
             ReactTestUtils.renderIntoDocument(
                 <MockAppComponent context={mockContext} />
@@ -142,7 +143,7 @@ describe ('handleHistory', function () {
             expect(mockContext.executeActionCalls[0].payload.url).to.equal(window.location.pathname);
             expect(mockContext.executeActionCalls[0].payload.params).to.deep.equal({a: 1});
         });
-        it ('listen to scroll event', function (done) {
+        it('listen to scroll event', function (done) {
             var routeStore = mockContext.getStore('RouteStore');
             routeStore._handleNavigateStart({url: '/the_path_from_state', method: 'GET'});
             MockAppComponent = provideContext(handleHistory(MockAppComponent, {
@@ -160,7 +161,7 @@ describe ('handleHistory', function () {
                 done();
             }, 150);
         });
-        it ('dispatch navigate event for pages that url does not match', function (done) {
+        it('dispatch navigate event for pages that url does not match', function (done) {
             var routeStore = mockContext.getStore('RouteStore');
             routeStore._handleNavigateStart({url: '/the_path_from_state', method: 'GET'});
             MockAppComponent = provideContext(handleHistory(MockAppComponent, {
@@ -180,7 +181,7 @@ describe ('handleHistory', function () {
                 done();
             }, 150);
         });
-        it ('does not dispatch navigate event for pages with matching url', function (done) {
+        it('does not dispatch navigate event for pages with matching url', function (done) {
             var routeStore = mockContext.getStore('RouteStore');
             routeStore._handleNavigateStart({url: '/the_path_from_history', method: 'GET'});
             MockAppComponent = provideContext(handleHistory(MockAppComponent, {
@@ -204,7 +205,7 @@ describe ('handleHistory', function () {
                 };
             });
 
-            it ('does not dispatch navigate event if there is a window.onbeforeunload method that the user does not confirm', function (done) {
+            it('does not dispatch navigate event if there is a window.onbeforeunload method that the user does not confirm', function (done) {
                 var routeStore = mockContext.getStore('RouteStore');
                 routeStore._handleNavigateStart({url: '/the_path_from_history', method: 'GET'});
                 MockAppComponent = provideContext(handleHistory(MockAppComponent, {
@@ -224,7 +225,7 @@ describe ('handleHistory', function () {
     });
 
     describe('componentWillUnmount()', function () {
-        it ('stop listening to popstate event', function () {
+        it('stop listening to popstate event', function () {
             var div = document.createElement('div');
             MockAppComponent = provideContext(handleHistory(MockAppComponent, {
                 historyCreator: function () {
@@ -242,7 +243,7 @@ describe ('handleHistory', function () {
     });
 
     describe('componentDidUpdate()', function () {
-        it ('no-op on same route', function () {
+        it('no-op on same route', function () {
             var routeStore = mockContext.getStore('RouteStore');
             routeStore._handleNavigateStart({url: '/foo', method: 'GET'});
             MockAppComponent = provideContext(handleHistory(MockAppComponent, {
@@ -256,7 +257,7 @@ describe ('handleHistory', function () {
             routeStore._handleNavigateStart({url: '/foo', method: 'GET'});
             expect(testResult.pushState).to.equal(undefined);
         });
-        it ('do not pushState, navigate.type=popstate', function () {
+        it('do not pushState, navigate.type=popstate', function () {
             var routeStore = mockContext.getStore('RouteStore');
             routeStore._handleNavigateStart({url: '/foo', method: 'GET'});
             MockAppComponent = provideContext(handleHistory(MockAppComponent, {
@@ -270,7 +271,7 @@ describe ('handleHistory', function () {
             routeStore._handleNavigateStart({url: '/bar', type: 'popstate', method: 'GET'});
             expect(testResult.pushState).to.equal(undefined);
         });
-        it ('update with different route, navigate.type=click, reset scroll position', function () {
+        it('update with different route, navigate.type=click, reset scroll position', function () {
             var routeStore = mockContext.getStore('RouteStore');
             routeStore._handleNavigateStart({url: '/foo', method: 'GET'});
             MockAppComponent = provideContext(handleHistory(MockAppComponent, {
@@ -285,7 +286,22 @@ describe ('handleHistory', function () {
             expect(testResult.pushState).to.eql({state: {params: {}, scroll: {x: 0, y: 0}}, title: null, url: '/bar'});
             expect(testResult.scrollTo).to.eql({x: 0, y: 0});
         });
-        it ('update with different route, navigate.type=click, enableScroll=false, do not reset scroll position', function () {
+        it('update with unicode route, navigate.type=click, reset scroll position', function () {
+            var routeStore = mockContext.getStore('RouteStore');
+            routeStore._handleNavigateStart({url: '/foo', method: 'GET'});
+            MockAppComponent = provideContext(handleHistory(MockAppComponent, {
+                historyCreator: function () {
+                    return historyMock('/foo');
+                }
+            }));
+            ReactTestUtils.renderIntoDocument(
+                <MockAppComponent context={mockContext} />
+            );
+            routeStore._handleNavigateStart({url: '/föö', method: 'GET'});
+            expect(testResult.pushState).to.eql({state: {params: {}, scroll: {x: 0, y: 0}}, title: null, url: '/föö'});
+            expect(testResult.scrollTo).to.eql({x: 0, y: 0});
+        });
+        it('update with different route, navigate.type=click, enableScroll=false, do not reset scroll position', function () {
             var routeStore = mockContext.getStore('RouteStore');
             routeStore._handleNavigateStart({url: '/foo', method: 'GET'});
             MockAppComponent = provideContext(handleHistory(MockAppComponent, {
@@ -301,7 +317,7 @@ describe ('handleHistory', function () {
             expect(testResult.pushState).to.eql({state: {params: {}}, title: null, url: '/bar'});
             expect(testResult.scrollTo).to.equal(undefined);
         });
-        it ('update with different route, navigate.type=replacestate, enableScroll=false, do not reset scroll position', function () {
+        it('update with different route, navigate.type=replacestate, enableScroll=false, do not reset scroll position', function () {
             var routeStore = mockContext.getStore('RouteStore');
             routeStore._handleNavigateStart({url: '/foo', method: 'GET'});
             MockAppComponent = provideContext(handleHistory(MockAppComponent, {
@@ -317,7 +333,7 @@ describe ('handleHistory', function () {
             expect(testResult.replaceState).to.eql({state: {params: {}}, title: null, url: '/bar'});
             expect(testResult.scrollTo).to.equal(undefined);
         });
-        it ('update with different route, navigate.type=default, reset scroll position', function () {
+        it('update with different route, navigate.type=default, reset scroll position', function () {
             var routeStore = mockContext.getStore('RouteStore');
             routeStore._handleNavigateStart({url: '/foo', method: 'GET'});
             MockAppComponent = provideContext(handleHistory(MockAppComponent, {
@@ -332,7 +348,7 @@ describe ('handleHistory', function () {
             expect(testResult.pushState).to.eql({state: {params: {}, scroll: {x: 0, y: 0} }, title: null, url: '/bar'});
             expect(testResult.scrollTo).to.eql({x: 0, y: 0});
         });
-        it ('update with different route, navigate.type=default, enableScroll=false, do not reset scroll position', function () {
+        it('update with different route, navigate.type=default, enableScroll=false, do not reset scroll position', function () {
             var routeStore = mockContext.getStore('RouteStore');
             routeStore._handleNavigateStart({url: '/foo', method: 'GET'});
             MockAppComponent = provideContext(handleHistory(MockAppComponent, {
@@ -348,7 +364,7 @@ describe ('handleHistory', function () {
             expect(testResult.pushState).to.eql({state: {params: {}}, title: null, url: '/bar'});
             expect(testResult.scrollTo).to.equal(undefined);
         });
-        it ('do not pushState, navigate.type=popstate, restore scroll position', function () {
+        it('do not pushState, navigate.type=popstate, restore scroll position', function () {
             var routeStore = mockContext.getStore('RouteStore');
             routeStore._handleNavigateStart({url: '/foo', method: 'GET'});
             MockAppComponent = provideContext(handleHistory(MockAppComponent, {
@@ -363,7 +379,7 @@ describe ('handleHistory', function () {
             expect(testResult.pushState).to.equal(undefined);
             expect(testResult.scrollTo).to.eql({x: 12, y: 200});
         });
-        it ('do not pushState, navigate.type=popstate, enableScroll=false, restore scroll position', function () {
+        it('do not pushState, navigate.type=popstate, enableScroll=false, restore scroll position', function () {
             var routeStore = mockContext.getStore('RouteStore');
             routeStore._handleNavigateStart({url: '/foo', method: 'GET'});
             MockAppComponent = provideContext(handleHistory(MockAppComponent, {
@@ -379,7 +395,7 @@ describe ('handleHistory', function () {
             expect(testResult.pushState).to.equal(undefined);
             expect(testResult.scrollTo).to.eql(undefined);
         });
-        it ('update with different route, navigate.type=click, with params', function () {
+        it('update with different route, navigate.type=click, with params', function () {
             var routeStore = mockContext.getStore('RouteStore');
             routeStore._handleNavigateStart({url: '/foo', method: 'GET'});
             MockAppComponent = provideContext(handleHistory(MockAppComponent, {
@@ -391,9 +407,9 @@ describe ('handleHistory', function () {
                 <MockAppComponent context={mockContext} />
             );
             routeStore._handleNavigateStart({url: '/bar', type: 'click', params: {foo: 'bar'}});
-            expect(testResult.pushState).to.eql({state: {params: {foo: 'bar'}, scroll: {x: 0, y:0}}, title: null, url: '/bar'});
+            expect(testResult.pushState).to.eql({state: {params: {foo: 'bar'}, scroll: {x: 0, y: 0}}, title: null, url: '/bar'});
         });
-        it ('update with same path and different hash, navigate.type=click, with params', function () {
+        it('update with same path and different hash, navigate.type=click, with params', function () {
             var routeStore = mockContext.getStore('RouteStore');
             routeStore._handleNavigateStart({url: '/foo#hash1', method: 'GET'});
             MockAppComponent = provideContext(handleHistory(MockAppComponent, {
@@ -405,9 +421,9 @@ describe ('handleHistory', function () {
                 <MockAppComponent context={mockContext} />
             );
             routeStore._handleNavigateStart({url: '/foo#hash2', type: 'click', params: {foo: 'bar'}});
-            expect(testResult.pushState).to.eql({state: {params: {foo: 'bar'}, scroll: {x: 0, y:0}}, title: null, url: '/foo#hash2'});
+            expect(testResult.pushState).to.eql({state: {params: {foo: 'bar'}, scroll: {x: 0, y: 0}}, title: null, url: '/foo#hash2'});
         });
-        it ('update with different route, navigate.type=replacestate, with params', function () {
+        it('update with different route, navigate.type=replacestate, with params', function () {
             var routeStore = mockContext.getStore('RouteStore');
             routeStore._handleNavigateStart({url: '/foo', method: 'GET'});
             MockAppComponent = provideContext(handleHistory(MockAppComponent, {
@@ -421,7 +437,7 @@ describe ('handleHistory', function () {
             routeStore._handleNavigateStart({url: '/bar', method: 'GET', type: 'replacestate', params: {foo: 'bar'}});
             expect(testResult.replaceState).to.eql({state: {params: {foo: 'bar'}, scroll: {x: 0, y: 0}}, title: null, url: '/bar'});
         });
-        it ('update with different route, navigate.type=replacestate', function () {
+        it('update with different route, navigate.type=replacestate', function () {
             var routeStore = mockContext.getStore('RouteStore');
             routeStore._handleNavigateStart({url: '/foo', method: 'GET'});
             MockAppComponent = provideContext(handleHistory(MockAppComponent, {
@@ -435,7 +451,7 @@ describe ('handleHistory', function () {
             routeStore._handleNavigateStart({url: '/bar', method: 'GET', type: 'replacestate'});
             expect(testResult.replaceState).to.eql({state: {params: {}, scroll: {x: 0, y: 0}}, title: null, url: '/bar'});
         });
-        it ('update with different route, navigate.type=pushstate, preserve scroll state', function () {
+        it('update with different route, navigate.type=pushstate, preserve scroll state', function () {
             global.window.scrollX = 42;
             global.window.scrollY = 3;
             var routeStore = mockContext.getStore('RouteStore');
@@ -451,7 +467,7 @@ describe ('handleHistory', function () {
             routeStore._handleNavigateStart({url: '/bar', method: 'GET', type: 'click', preserveScrollPosition: true});
             expect(testResult.pushState).to.eql({state: {params: {}, scroll: {x: 42, y: 3}}, title: null, url: '/bar'});
         });
-        it ('update with different route, navigate.type=replacestate, preserve scroll state', function () {
+        it('update with different route, navigate.type=replacestate, preserve scroll state', function () {
             global.window.scrollX = 42;
             global.window.scrollY = 3;
             var routeStore = mockContext.getStore('RouteStore');
