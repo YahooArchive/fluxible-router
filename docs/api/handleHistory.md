@@ -49,3 +49,19 @@ AppComponent = provideContext(AppComponent);
 
 module.exports = AppComponent;
 ```
+
+### Decorator Usage
+
+```js
+// components/App.jsx
+import {provideContext} from 'fluxible-addons-react';
+import {handleHistory} from 'fluxible-router';
+
+@provideContext
+@handleHistory
+class AppComponent extends React.Component {
+    //...
+}
+
+export default AppComponent;
+```

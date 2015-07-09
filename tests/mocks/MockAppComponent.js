@@ -25,4 +25,30 @@ module.exports = provideContext(handleHistory(MockAppComponent, {
     checkRouteOnPageLoad: false,
     enableScroll: true
 }));
-module.exports.UnwrappedMockAppComponent = MockAppComponent;
+
+module.exports.createWrappedMockAppComponent = function createWrappedMockAppComponent(opts) {
+    return provideContext(handleHistory(MockAppComponent, opts));
+};
+
+module.exports.createDecoratedMockAppComponent = function createDecoratedMockAppComponent(opts) {
+    @provideContext
+    @handleHistory(opts)
+    class DecoratedMockAppComponent extends React.Component {
+        constructor(props, context) {
+            super(props, context);
+        }
+        render() {
+            if (!this.props.children) {
+                return null;
+            }
+            return React.addons.cloneWithProps(this.props.children, {
+                currentRoute: this.props.currentRoute
+            });
+        }
+    }
+    DecoratedMockAppComponent.contextTypes = {
+        getStore: React.PropTypes.func.isRequired
+    };
+
+    return DecoratedMockAppComponent;
+};
