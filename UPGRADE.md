@@ -1,5 +1,9 @@
 # Upgrade Guide
 
+## 0.1.x to 0.2.x
+
+Upgrade Fluxible to 0.5.x.
+
 ## `flux-router-component` to `fluxible-router`
 
 Be sure to read the [quick start doc](https://github.com/yahoo/fluxible-router/blob/master/docs/quick-start.md). Here we'll be covering the logistical aspects of updating existing apps.
