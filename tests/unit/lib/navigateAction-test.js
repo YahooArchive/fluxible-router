@@ -58,7 +58,7 @@ describe('navigateAction', function () {
         };
     });
 
-    it ('should dispatch on route match', function (done) {
+    it('should dispatch on route match', function (done) {
         navigateAction(mockContext, {
             url: '/'
         }, function (err) {
@@ -72,7 +72,7 @@ describe('navigateAction', function () {
         });
     });
 
-    it ('should include query param on route match', function (done) {
+    it('should include query param on route match', function (done) {
         var url = '/?foo=bar&a=b&a=c&bool#abcd=fff';
         navigateAction(mockContext, {
             url: url
@@ -89,7 +89,7 @@ describe('navigateAction', function () {
         });
     });
 
-    it ('should not call execute action if there is no action', function (done) {
+    it('should not call execute action if there is no action', function (done) {
         navigateAction(mockContext, {
             url: '/'
         }, function () {
@@ -98,7 +98,7 @@ describe('navigateAction', function () {
         });
     });
 
-    it ('should call execute action if there is an action', function (done) {
+    it('should call execute action if there is an action', function (done) {
         navigateAction(mockContext, {
             url: '/action'
         }, function (err) {
@@ -113,7 +113,7 @@ describe('navigateAction', function () {
         });
     });
 
-    it ('should call execute action if there is an action as a string', function (done) {
+    it('should call execute action if there is an action as a string', function (done) {
         navigateAction(mockContext, {
             url: '/string'
         }, function (err) {
@@ -128,7 +128,7 @@ describe('navigateAction', function () {
         });
     });
 
-    it ('should dispatch failure if action failed', function (done) {
+    it('should dispatch failure if action failed', function (done) {
         navigateAction(mockContext, {
             url: '/fail'
         }, function (err) {
@@ -140,7 +140,7 @@ describe('navigateAction', function () {
         });
     });
 
-    it ('should call back with a 404 error if route not found', function (done) {
+    it('should call back with a 404 error if route not found', function (done) {
         navigateAction(mockContext, {
             url: '/404'
         }, function (err) {
@@ -150,7 +150,7 @@ describe('navigateAction', function () {
         });
     });
 
-    it ('should call back with a 404 error if url matches but not method', function (done) {
+    it('should call back with a 404 error if url matches but not method', function (done) {
         navigateAction(mockContext, {
             url: '/post',
             method: 'get'
@@ -161,7 +161,7 @@ describe('navigateAction', function () {
         });
     });
 
-    it ('should dispatch if both url and method matches', function (done) {
+    it('should dispatch if both url and method matches', function (done) {
         navigateAction(mockContext, {
             url: '/post',
             method: 'post'
@@ -176,7 +176,7 @@ describe('navigateAction', function () {
         });
     });
 
-    it ('should error if routeStore does not exist', function (done) {
+    it('should error if routeStore does not exist', function (done) {
         function BadRouteStore(){}
         BadRouteStore.storeName = 'RouteStore';
 
