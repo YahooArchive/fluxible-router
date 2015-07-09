@@ -16,3 +16,43 @@ These props will be passed to your component when a `RouteStore` change is emitt
 | `currentRoute` | The config object from the matched route (immutable object). |
 | `isActive` | A shortcut to `RouteStore.isActive`. See: [`RouteStore`](RouteStore.md). |
 | `makePath` | A shortcut to `RouteStore.makePath`. See: [`RouteStore`](RouteStore.md). |
+
+## Example Usage
+
+```js
+// components/MyComponent.jsx
+var handleRoute = require('fluxible-router').handleHistory;
+
+var MyComponent = React.createClass({
+    render: function () {
+        // Get the handler from the current route which is passed in as prop
+        var Handler = this.props.currentRoute.get('handler');
+
+        return (
+            <div>
+                <Handler />
+            </div>
+        );
+    }
+});
+
+// wrap with route handler
+MyComponent = handleRoute(MyComponent);
+
+module.exports = MyComponent;
+```
+
+### Decorator Usage
+
+```js
+// components/App.jsx
+import {provideContext} from 'fluxible-addons-react';
+import {handleHistory} from 'fluxible-router';
+
+@handleRoute
+class MyComponent extends React.Component {
+    //...
+}
+
+export default MyComponent;
+```
