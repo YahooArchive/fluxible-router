@@ -89,6 +89,24 @@ describe('navigateAction', function () {
         });
     });
 
+    it('should include navigate object on route match', function (done) {
+        var url = '/';
+        navigateAction(mockContext, {
+            url: url,
+            someKey1: 'someData',
+            someKey2: {
+                someKey3: ['a', 'b']
+            }
+        }, function (err) {
+            expect(err).to.equal(undefined);
+            expect(mockContext.dispatchCalls.length).to.equal(2);
+            expect(mockContext.dispatchCalls[0].name).to.equal('NAVIGATE_START');
+            var route = mockContext.getStore('RouteStore').getCurrentRoute();
+            expect(route.toJS().navigate).to.eql({url: url, someKey1: 'someData', someKey2: {someKey3: ['a', 'b']}}, 'navigate added to route payload for NAVIGATE_START' + JSON.stringify(route));
+            done();
+        });
+    });
+
     it('should not call execute action if there is no action', function (done) {
         navigateAction(mockContext, {
             url: '/'
