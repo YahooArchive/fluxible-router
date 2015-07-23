@@ -92,7 +92,7 @@ describe('NavLink', function () {
                 );
             }).to.throw();
         });
-        it('should set active state if href matches current route', function () {
+        it('should set active state by class name if href matches current route', function () {
             var navParams = {a: 1, b: 2};
             var link = ReactTestUtils.renderIntoDocument(
                 <MockAppComponent context={mockContext}>
@@ -100,6 +100,15 @@ describe('NavLink', function () {
                 </MockAppComponent>
             );
             expect(link.getDOMNode().getAttribute('class')).to.equal('active');
+        });
+        it('should set active state by tag name if the optional activeElement property is set', function () {
+            var navParams = {a: 1, b: 2};
+            var link = ReactTestUtils.renderIntoDocument(
+                <MockAppComponent context={mockContext}>
+                    <NavLink activeElement="span" routeName='foo' />
+                </MockAppComponent>
+            );
+            expect(link.getDOMNode().nodeName.toLowerCase()).to.equal('span');
         });
         it('should set active state with custom class and style', function () {
             var link = ReactTestUtils.renderIntoDocument(
