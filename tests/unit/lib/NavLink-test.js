@@ -392,14 +392,14 @@ describe('NavLink', function () {
             setTimeout(function () {
                 expect(link.getDOMNode().getAttribute('href')).to.equal('/foo');
                 expect(link.getDOMNode().textContent).to.equal('bar');
-                expect(!link.getDOMNode().getAttribute('class'));
+                expect(!link.getDOMNode().getAttribute('class')).to.equal(true);
                 done();
             }, 50);
         });
     });
 
     describe('componentWillUnmount', function () {
-        it('should update active state', function () {
+        it('should remove the change listener', function () {
             var div = document.createElement('div');
             React.render(
                 <MockAppComponent context={mockContext}>

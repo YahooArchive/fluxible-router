@@ -5,6 +5,7 @@
 'use strict';
 
 module.exports = {
+    createNavLinkComponent: require('./lib/createNavLinkComponent'),
     handleHistory: require('./lib/handleHistory'),
     handleRoute: require('./lib/handleRoute'),
     History: require('./lib/History'),
