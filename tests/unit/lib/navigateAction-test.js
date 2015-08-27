@@ -150,7 +150,7 @@ describe('navigateAction', function () {
         navigateAction(mockContext, {
             url: '/fail'
         }, function (err) {
-            expect(err).to.be.an('object');
+            expect(err).to.be.instanceof(Error);
             expect(mockContext.dispatchCalls.length).to.equal(2);
             expect(mockContext.dispatchCalls[1].name).to.equal('NAVIGATE_FAILURE');
             expect(mockContext.dispatchCalls[1].payload.message).to.equal(err.message);
@@ -206,7 +206,7 @@ describe('navigateAction', function () {
             url: '/action',
             method: 'get'
         }, function (err) {
-            expect(err).to.be.an('object');
+            expect(err).to.be.instanceof(Error);
             expect(err.message).to.equal('RouteStore has not implemented `getCurrentRoute` method.');
             done();
         });
