@@ -92,7 +92,7 @@ describe('NavLink', function () {
                 );
             }).to.throw();
         });
-        it('should set active state by class name if href matches current route', function () {
+        it('should set active state if href matches current route', function () {
             var navParams = {a: 1, b: 2};
             var link = ReactTestUtils.renderIntoDocument(
                 <MockAppComponent context={mockContext}>
