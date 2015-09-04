@@ -101,6 +101,33 @@ describe('History', function () {
             var url = history.getUrl();
             expect(url).to.equal('/_url');
         });
+        it ('has pushState, should remove hostname from history.state.origUrl', function () {
+            var win = _.extend(windowMock.HTML5, {
+                history: {
+                    state: {
+                        origUrl: 'https://foo.com:4080/_url'
+                    }
+                },
+                location: {
+                    protocol: 'https:',
+                    host: 'foo.com:4080',
+                    pathname: '/path/to/page',
+                    search: '',
+                    hash: '#/path/to/abc'
+                }
+            });
+            var history = new History({win: win});
+            expect(history.getUrl()).to.equal('/_url');
+
+            win.history.state.origUrl = 'https://foo.com:4080/_something?a=b';
+            expect(history.getUrl()).to.equal('/_something?a=b');
+
+            win.history.state.origUrl = 'https://foo.com:4080';
+            expect(history.getUrl()).to.equal('/');
+
+            win.history.state.origUrl = 'https://foo.com:4080/';
+            expect(history.getUrl()).to.equal('/');
+        });
         it ('has pushState with query', function () {
             var win = _.extend(windowMock.HTML5, {
                 location: {
