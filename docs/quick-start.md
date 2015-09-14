@@ -1,4 +1,4 @@
-# Quick Start
+# Fluxible-Router Quick Start
 
 ## Register a Route Store
 
