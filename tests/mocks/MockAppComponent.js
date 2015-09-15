@@ -3,7 +3,7 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 'use strict';
-var React = require('react/addons');
+var React = require('react');
 var provideContext = require('fluxible-addons-react/provideContext');
 var handleHistory = require('../../lib/handleHistory');
 
@@ -15,7 +15,7 @@ var MockAppComponent = React.createClass({
         if (!this.props.children) {
             return null;
         }
-        return React.addons.cloneWithProps(this.props.children, {
+        return React.cloneElement(this.props.children, {
             currentRoute: this.props.currentRoute
         });
     }
@@ -34,6 +34,9 @@ module.exports.createDecoratedMockAppComponent = function createDecoratedMockApp
     @provideContext
     @handleHistory(opts)
     class DecoratedMockAppComponent extends React.Component {
+        static contextTypes = {
+            getStore: React.PropTypes.func.isRequired
+        };
         constructor(props, context) {
             super(props, context);
         }
@@ -41,14 +44,11 @@ module.exports.createDecoratedMockAppComponent = function createDecoratedMockApp
             if (!this.props.children) {
                 return null;
             }
-            return React.addons.cloneWithProps(this.props.children, {
+            return React.cloneElement(this.props.children, {
                 currentRoute: this.props.currentRoute
             });
         }
     }
-    DecoratedMockAppComponent.contextTypes = {
-        getStore: React.PropTypes.func.isRequired
-    };
 
     return DecoratedMockAppComponent;
 };

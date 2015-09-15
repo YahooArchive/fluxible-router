@@ -4,6 +4,7 @@
  */
 /*globals describe,it,before,beforeEach */
 var React;
+var ReactDOM;
 var NavLink;
 var ReactTestUtils;
 var jsdom = require('jsdom');
@@ -33,8 +34,9 @@ describe('NavLink', function () {
         global.document = jsdom.jsdom('<html><body></body></html>');
         global.window = global.document.parentWindow;
         global.navigator = global.window.navigator;
-        React = require('react/addons');
-        ReactTestUtils = React.addons.TestUtils;
+        React = require('react');
+        ReactDOM = require('react-dom');
+        ReactTestUtils = require('react-addons-test-utils');
         mockContext = createMockComponentContext({
             stores: [TestRouteStore]
         });
@@ -62,8 +64,8 @@ describe('NavLink', function () {
                     </NavLink>
                 </MockAppComponent>
             );
-            expect(link.getDOMNode().getAttribute('href')).to.equal('/foo');
-            expect(link.getDOMNode().textContent).to.equal('bar');
+            expect(ReactDOM.findDOMNode(link).getAttribute('href')).to.equal('/foo');
+            expect(ReactDOM.findDOMNode(link).textContent).to.equal('bar');
         });
         it('should prefer href over routeName', function () {
             var link = ReactTestUtils.renderIntoDocument(
@@ -71,7 +73,7 @@ describe('NavLink', function () {
                     <NavLink routeName="fooo" href="/foo" />
                 </MockAppComponent>
             );
-            expect(link.getDOMNode().getAttribute('href')).to.equal('/foo');
+            expect(ReactDOM.findDOMNode(link).getAttribute('href')).to.equal('/foo');
         });
         it('should create href from routeName and parameters', function () {
             var navParams = {a: 1, b: 2};
@@ -80,7 +82,7 @@ describe('NavLink', function () {
                     <NavLink routeName='fooAB' navParams={navParams} />
                 </MockAppComponent>
             );
-            expect(link.getDOMNode().getAttribute('href')).to.equal('/foo/1/2');
+            expect(ReactDOM.findDOMNode(link).getAttribute('href')).to.equal('/foo/1/2');
         });
         it('should throw if href and routeName undefined', function () {
             var navParams = {a: 1, b: 2};
@@ -99,7 +101,7 @@ describe('NavLink', function () {
                     <NavLink routeName='foo' />
                 </MockAppComponent>
             );
-            expect(link.getDOMNode().getAttribute('class')).to.equal('active');
+            expect(ReactDOM.findDOMNode(link).getAttribute('class')).to.equal('active');
         });
         it('should set active state with custom class and style', function () {
             var link = ReactTestUtils.renderIntoDocument(
@@ -107,8 +109,8 @@ describe('NavLink', function () {
                     <NavLink routeName='foo' activeClass="bar" activeStyle={{color: 'red'}} />
                 </MockAppComponent>
             );
-            expect(link.getDOMNode().getAttribute('class')).to.equal('bar');
-            expect(link.getDOMNode().getAttribute('style')).to.equal('color:red;');
+            expect(ReactDOM.findDOMNode(link).getAttribute('class')).to.equal('bar');
+            expect(ReactDOM.findDOMNode(link).getAttribute('style')).to.equal('color:red;');
         });
         it('should set the active state and keep the passed props', function () {
             var link = ReactTestUtils.renderIntoDocument(
@@ -117,8 +119,8 @@ describe('NavLink', function () {
                         activeStyle={{color: 'red'}} style={{background: 'blue'}} />
                 </MockAppComponent>
             );
-            expect(link.getDOMNode().getAttribute('class')).to.equal('bar active2');
-            expect(link.getDOMNode().getAttribute('style')).to.equal('background:blue;color:red;');
+            expect(ReactDOM.findDOMNode(link).getAttribute('class')).to.equal('bar active2');
+            expect(ReactDOM.findDOMNode(link).getAttribute('style')).to.equal('background:blue;color:red;');
         });
         it('should not set active state if href does not match current route', function () {
             var navParams = {a: 1, b: 2};
@@ -127,7 +129,7 @@ describe('NavLink', function () {
                     <NavLink routeName='fooAB' navParams={navParams} />
                 </MockAppComponent>
             );
-            expect(link.getDOMNode().getAttribute('class')).to.equal(null);
+            expect(ReactDOM.findDOMNode(link).getAttribute('class')).to.equal(null);
         });
     });
 
@@ -139,7 +141,7 @@ describe('NavLink', function () {
                     <NavLink href='/foo' preserveScrollPosition={true} navParams={navParams} />
                 </MockAppComponent>
             );
-            ReactTestUtils.Simulate.click(link.getDOMNode(), {button: 0});
+            ReactTestUtils.Simulate.click(ReactDOM.findDOMNode(link), {button: 0});
             window.setTimeout(function () {
                 expect(mockContext.executeActionCalls[0].action).to.equal(navigateAction);
                 expect(mockContext.executeActionCalls[0].payload.type).to.equal('click');
@@ -150,8 +152,8 @@ describe('NavLink', function () {
             }, 10);
         });
         it ('stopPropagation stops event propagation', function (done) {
-            var propagateFail = function(e) { 
-                expect(e.isPropagationStopped()).to.eql(true); 
+            var propagateFail = function(e) {
+                expect(e.isPropagationStopped()).to.eql(true);
             };
             var navParams = {a: 1, b: true};
             var link = ReactTestUtils.renderIntoDocument(
@@ -159,7 +161,7 @@ describe('NavLink', function () {
                         <NavLink href='/foo' stopPropagation={true} navParams={navParams} />
                     </MockAppComponent>
             );
-            ReactTestUtils.Simulate.click(link.getDOMNode(), {button: 0});
+            ReactTestUtils.Simulate.click(ReactDOM.findDOMNode(link), {button: 0});
             window.setTimeout(function () {
                 expect(mockContext.executeActionCalls.length).to.equal(1);
                 expect(mockContext.executeActionCalls[0].action).to.equal(navigateAction);
@@ -173,7 +175,7 @@ describe('NavLink', function () {
                     <NavLink href='/foo' navParams={navParams} />
                 </MockAppComponent>
             );
-            ReactTestUtils.Simulate.click(link.getDOMNode(), {button: 0});
+            ReactTestUtils.Simulate.click(ReactDOM.findDOMNode(link), {button: 0});
             window.setTimeout(function () {
                 expect(mockContext.executeActionCalls.length).to.equal(1);
                 expect(mockContext.executeActionCalls[0].action).to.equal(navigateAction);
@@ -190,7 +192,7 @@ describe('NavLink', function () {
                 </MockAppComponent>
             );
             link.context = mockContext;
-            ReactTestUtils.Simulate.click(link.getDOMNode(), {button: 0});
+            ReactTestUtils.Simulate.click(ReactDOM.findDOMNode(link), {button: 0});
             window.setTimeout(function () {
                 expect(mockContext.executeActionCalls.length).to.equal(1);
                 expect(mockContext.executeActionCalls[0].action).to.equal(navigateAction);
@@ -207,7 +209,7 @@ describe('NavLink', function () {
                     <NavLink href={origin + '/foo?x=y'} navParams={navParams} />
                 </MockAppComponent>
             );
-            ReactTestUtils.Simulate.click(link.getDOMNode(), {button: 0});
+            ReactTestUtils.Simulate.click(ReactDOM.findDOMNode(link), {button: 0});
             window.setTimeout(function () {
                 expect(mockContext.executeActionCalls.length).to.equal(1);
                 expect(mockContext.executeActionCalls[0].action).to.equal(navigateAction);
@@ -223,7 +225,7 @@ describe('NavLink', function () {
                     <NavLink href='http://domain.does.not.exist/foo' />
                 </MockAppComponent>
             );
-            ReactTestUtils.Simulate.click(link.getDOMNode(), {button: 0});
+            ReactTestUtils.Simulate.click(ReactDOM.findDOMNode(link), {button: 0});
             window.setTimeout(function () {
                 expect(testResult.dispatch).to.equal(undefined);
                 done();
@@ -235,8 +237,8 @@ describe('NavLink', function () {
                     <NavLink href='#here' />
                 </MockAppComponent>
             );
-            ReactTestUtils.Simulate.click(link.getDOMNode(), {button: 0});
-            ReactTestUtils.Simulate.click(link.getDOMNode(), {button: 0});
+            ReactTestUtils.Simulate.click(ReactDOM.findDOMNode(link), {button: 0});
+            ReactTestUtils.Simulate.click(ReactDOM.findDOMNode(link), {button: 0});
             window.setTimeout(function () {
                 expect(testResult.dispatch).to.equal(undefined);
                 done();
@@ -249,7 +251,7 @@ describe('NavLink', function () {
                     <NavLink href='/foo' followLink={true} />
                 </MockAppComponent>
             );
-            ReactTestUtils.Simulate.click(link.getDOMNode(), {button: 0});
+            ReactTestUtils.Simulate.click(ReactDOM.findDOMNode(link), {button: 0});
             window.setTimeout(function () {
                 expect(testResult.dispatch).to.equal(undefined);
                 done();
@@ -261,7 +263,7 @@ describe('NavLink', function () {
                     <NavLink href='/foo' followLink={false} />
                 </MockAppComponent>
             );
-            ReactTestUtils.Simulate.click(link.getDOMNode(), {button: 0});
+            ReactTestUtils.Simulate.click(ReactDOM.findDOMNode(link), {button: 0});
             window.setTimeout(function () {
                 expect(mockContext.executeActionCalls.length).to.equal(1);
                 expect(mockContext.executeActionCalls[0].action).to.equal(navigateAction);
@@ -285,7 +287,7 @@ describe('NavLink', function () {
                         <NavLink href='/foo' followLink={false} />
                     </MockAppComponent>
                 );
-                ReactTestUtils.Simulate.click(link.getDOMNode(), {button: 0});
+                ReactTestUtils.Simulate.click(ReactDOM.findDOMNode(link), {button: 0});
                 window.setTimeout(function () {
                     expect(mockContext.executeActionCalls.length).to.equal(0);
                     done();
@@ -313,7 +315,7 @@ describe('NavLink', function () {
                         <NavLink href={origin} />
                     </MockAppComponent>
                 );
-                ReactTestUtils.Simulate.click(link.getDOMNode(), {button: 0});
+                ReactTestUtils.Simulate.click(ReactDOM.findDOMNode(link), {button: 0});
                 window.setTimeout(function () {
                     expect(mockContext.executeActionCalls.length).to.equal(1);
                     expect(mockContext.executeActionCalls[0].action).to.equal(navigateAction);
@@ -329,7 +331,7 @@ describe('NavLink', function () {
                         <NavLink href={origin} replaceState={true} />
                     </MockAppComponent>
                 );
-                ReactTestUtils.Simulate.click(link.getDOMNode(), {button: 0});
+                ReactTestUtils.Simulate.click(ReactDOM.findDOMNode(link), {button: 0});
                 window.setTimeout(function () {
                     expect(mockContext.executeActionCalls[0].action).to.equal(navigateAction);
                     expect(mockContext.executeActionCalls[0].payload.type).to.equal('replacestate');
@@ -347,7 +349,7 @@ describe('NavLink', function () {
                             <NavLink href={origin} />
                         </MockAppComponent>
                     );
-                    ReactTestUtils.Simulate.click(link.getDOMNode(), eventData);
+                    ReactTestUtils.Simulate.click(ReactDOM.findDOMNode(link), eventData);
                     window.setTimeout(function () {
                         expect(testResult.dispatch).to.equal(undefined);
                         done();
@@ -363,7 +365,7 @@ describe('NavLink', function () {
                 </MockAppComponent>
             );
             expect(testResult.onClickMockInvoked).to.equal(undefined);
-            ReactTestUtils.Simulate.click(link.getDOMNode(), {button: 0});
+            ReactTestUtils.Simulate.click(ReactDOM.findDOMNode(link), {button: 0});
             window.setTimeout(function () {
                 expect(testResult.dispatch).to.equal(undefined);
                 expect(testResult.onClickMockInvoked).to.equal(true);
@@ -381,18 +383,18 @@ describe('NavLink', function () {
                     </NavLink>
                 </MockAppComponent>
             );
-            expect(link.getDOMNode().getAttribute('href')).to.equal('/foo');
-            expect(link.getDOMNode().textContent).to.equal('bar');
-            expect(link.getDOMNode().getAttribute('class')).to.equal('active');
+            expect(ReactDOM.findDOMNode(link).getAttribute('href')).to.equal('/foo');
+            expect(ReactDOM.findDOMNode(link).textContent).to.equal('bar');
+            expect(ReactDOM.findDOMNode(link).getAttribute('class')).to.equal('active');
             mockContext.getStore('RouteStore')._handleNavigateStart({
                 url: '/bar',
                 method: 'GET'
             });
             // Wait for DOM to update
             setTimeout(function () {
-                expect(link.getDOMNode().getAttribute('href')).to.equal('/foo');
-                expect(link.getDOMNode().textContent).to.equal('bar');
-                expect(!link.getDOMNode().getAttribute('class')).to.equal(true);
+                expect(ReactDOM.findDOMNode(link).getAttribute('href')).to.equal('/foo');
+                expect(ReactDOM.findDOMNode(link).textContent).to.equal('bar');
+                expect(!ReactDOM.findDOMNode(link).getAttribute('class')).to.equal(true);
                 done();
             }, 50);
         });
@@ -401,14 +403,14 @@ describe('NavLink', function () {
     describe('componentWillUnmount', function () {
         it('should remove the change listener', function () {
             var div = document.createElement('div');
-            React.render(
+            ReactDOM.render(
                 <MockAppComponent context={mockContext}>
                     <NavLink href='/foo' />
                 </MockAppComponent>
             , div);
             var routeStore = mockContext.getStore('RouteStore');
             expect(routeStore.listeners('change').length).to.equal(2);
-            React.unmountComponentAtNode(div);
+            ReactDOM.unmountComponentAtNode(div);
             expect(routeStore.listeners('change').length).to.equal(0);
         });
     });

@@ -26,7 +26,7 @@ $ npm install --save fluxible-router
  * Follows Flux flow
  * Higher order components for handling [history](https://github.com/yahoo/fluxible-router/blob/master/docs/api/handleHistory.md) and [routes](https://github.com/yahoo/fluxible-router/blob/master/docs/api/handleRoute.md)
  * [`navigateAction`](https://github.com/yahoo/fluxible-router/blob/master/docs/api/navigateAction.md) for changing routes
- * Updated for React 0.13
+ * Updated for React 0.14
 
 ## Required Polyfills
 
@@ -46,7 +46,8 @@ You can also look into this [polyfill.io polyfill service](https://cdn.polyfill.
 
 | Compatible React Version | fluxible-router Version |
 |--------------------------|-------------------------------|
-| 0.13 | >= 0.1.x |
+| 0.14 | >= 0.3.x |
+| 0.13 | <= 0.2.x |
 
 ## License
 This software is free to use under the Yahoo Inc. BSD license.
