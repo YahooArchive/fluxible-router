@@ -7,6 +7,7 @@ var mockery = require('mockery');
 var expect = require('chai').expect;
 var jsdom = require('jsdom');
 var React;
+var ReactDOM;
 var mockCreators = {
     wrappedCreator: 'createWrappedMockAppComponent',
     decoratedCreator: 'createDecoratedMockAppComponent'
@@ -76,10 +77,11 @@ describe('handleHistory', function () {
         global.navigator = global.window.navigator;
         global.window.scrollTo = scrollToMock;
         React = require('react');
+        ReactDOM = require('react-dom');
         provideContext = require('fluxible-addons-react/provideContext');
         handleHistory = require('../../../').handleHistory;
         MockAppComponentLib = require('../../mocks/MockAppComponent');
-        ReactTestUtils = React.addons.TestUtils;
+        ReactTestUtils = require('react-addons-test-utils');
         mockContext = createMockComponentContext({
             stores: [TestRouteStore]
         });
@@ -245,10 +247,10 @@ describe('handleHistory', function () {
                             return historyMock('/foo');
                         }
                     });
-                    React.render(
+                    ReactDOM.render(
                         <MockAppComponent context={mockContext} />
                         , div);
-                    React.unmountComponentAtNode(div);
+                    ReactDOM.unmountComponentAtNode(div);
                     expect(testResult.historyMockOn).to.equal(null);
                     window.dispatchEvent({_type: 'popstate', state: {params: {a: 1}}});
                     expect(testResult.dispatch).to.equal(undefined);
