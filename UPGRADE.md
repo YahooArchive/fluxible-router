@@ -1,5 +1,9 @@
 # Upgrade Guide
 
+## 0.2.x to 0.3.x
+
+Upgrade React to 0.14. See https://facebook.github.io/react/blog/2015/09/10/react-v0.14-rc1.html
+
 ## 0.1.x to 0.2.x
 
 Upgrade Fluxible to 0.5.x.

@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.3.0
+
+### Breaking Changes
+
+ * Upgraded to React 0.14, breaking compatibility with older versions of React
+
 ## 0.2.0
 
 ### Features
