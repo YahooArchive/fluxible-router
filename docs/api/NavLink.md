@@ -14,6 +14,7 @@ in navigation events.
 | replaceState | boolean, default to false | If set to true, replaceState is being used instead of pushState |
 | preserveScrollPosition | boolean, default to false | If set to true, the page will maintain its scroll position on route change. |
 | stopPropagation | boolean, default to false | If set to true, the click event will not be propagated beyond the NavLink |
+| activeElement | string or React.Component| If specified, active NavLink components will use this component instead of 'a' tags |
 
 
 ## Example Usage

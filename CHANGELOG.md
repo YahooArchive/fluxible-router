@@ -5,6 +5,10 @@
 ### Breaking Changes
 
  * Upgraded to React 0.14, breaking compatibility with older versions of React
+ 
+### Features
+
+ * [#69] Add NavLink `activeElement` option to use another element type for active state
 
 ## 0.2.0
 
