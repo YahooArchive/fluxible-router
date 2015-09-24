@@ -110,7 +110,7 @@ describe('NavLink', function () {
                     <NavLink activeElement="span" routeName='foo' />
                 </MockAppComponent>
             );
-            expect(link.getDOMNode().nodeName.toLowerCase()).to.equal('span');
+            expect(ReactDOM.findDOMNode(link).nodeName.toLowerCase()).to.equal('span');
         });
         it('should set active state with custom class and style', function () {
             var link = ReactTestUtils.renderIntoDocument(
