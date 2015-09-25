@@ -327,7 +327,7 @@ describe('handleHistory', function () {
                         <MockAppComponent context={mockContext} />
                     );
                     routeStore._handleNavigateStart({url: '/bar', method: 'GET'});
-                    expect(testResult.pushState).to.eql({state: {params: {}}, title: null, url: '/bar'});
+                    expect(testResult.pushState).to.eql({state: {params: {}, scroll: {x: 0, y: 0}}, title: null, url: '/bar'});
                     expect(testResult.scrollTo).to.equal(undefined);
                 });
                 it('update with different route, navigate.type=replacestate, enableScroll=false, do not reset scroll position', function () {
@@ -343,7 +343,7 @@ describe('handleHistory', function () {
                         <MockAppComponent context={mockContext} />
                     );
                     routeStore._handleNavigateStart({url: '/bar', method: 'GET', type: 'replacestate'});
-                    expect(testResult.replaceState).to.eql({state: {params: {}}, title: null, url: '/bar'});
+                    expect(testResult.replaceState).to.eql({state: {params: {}, scroll: {x: 0, y: 0}}, title: null, url: '/bar'});
                     expect(testResult.scrollTo).to.equal(undefined);
                 });
                 it('update with different route, navigate.type=default, reset scroll position', function () {
@@ -374,7 +374,7 @@ describe('handleHistory', function () {
                         <MockAppComponent context={mockContext} />
                     );
                     routeStore._handleNavigateStart({url: '/bar', method: 'GET'});
-                    expect(testResult.pushState).to.eql({state: {params: {}}, title: null, url: '/bar'});
+                    expect(testResult.pushState).to.eql({state: {params: {}, scroll: {x: 0, y: 0}}, title: null, url: '/bar'});
                     expect(testResult.scrollTo).to.equal(undefined);
                 });
                 it('do not pushState, navigate.type=popstate, restore scroll position', function () {
