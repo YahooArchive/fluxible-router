@@ -12,7 +12,7 @@ in navigation events.
 | navParams | Object | If `href` prop is not available, `navParams` object will be used together with `routeName` to generate the href for the link.  This object needs to contain route params the route path needs.  Eg. for a route path `/article/:id`, `navParams.id` will be the article ID. |
 | followLink | boolean, default to false | If set to true, client side navigation will be disabled.  NavLink will just act like a regular anchor link. |
 | replaceState | boolean, default to false | If set to true, replaceState is being used instead of pushState |
-| preserveScrollPosition | boolean, default to false | If set to true, the page will maintain its scroll position on route change. |
+| preserveScrollPosition | boolean, default to false | If set to true, the page will maintain its scroll position while change to new route.  This is useful for cases like on e-commerce site where user might want to change a product size.  The url will change, but the scroll position needs to remain the same. |
 | stopPropagation | boolean, default to false | If set to true, the click event will not be propagated beyond the NavLink |
 
 
