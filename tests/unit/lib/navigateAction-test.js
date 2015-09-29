@@ -14,6 +14,10 @@ describe('navigateAction', function () {
         home: {
             method: 'get',
             path: '/'
+        },        
+        withParams: {
+            method: 'get',
+            path: '/withParams/:id'
         },
         action: {
             method: 'get',
@@ -190,6 +194,35 @@ describe('navigateAction', function () {
             expect(mockContext.dispatchCalls[0].payload.url).to.equal('/post');
             expect(mockContext.dispatchCalls[1].name).to.equal('NAVIGATE_SUCCESS');
             expect(mockContext.dispatchCalls[1].payload.get('url')).to.equal('/post');
+            done();
+        });
+    });
+
+    it('should dispatch if routeName is passed and it matches', function (done) {
+        navigateAction(mockContext, {
+            routeName: 'home'
+        }, function (err) {
+            expect(err).to.equal(undefined);
+            expect(mockContext.dispatchCalls.length).to.equal(2);
+            expect(mockContext.dispatchCalls[0].name).to.equal('NAVIGATE_START');
+            expect(mockContext.dispatchCalls[0].payload.url).to.equal('/');
+            expect(mockContext.dispatchCalls[1].name).to.equal('NAVIGATE_SUCCESS');
+            expect(mockContext.dispatchCalls[1].payload.get('url')).to.equal('/');
+            done();
+        });
+    });
+
+    it('should dispatch if routeName is passed with params and it matches', function (done) {
+        navigateAction(mockContext, {
+            routeName: 'withParams',
+            params: { id: 5 }
+        }, function (err) {
+            expect(err).to.equal(undefined);
+            expect(mockContext.dispatchCalls.length).to.equal(2);
+            expect(mockContext.dispatchCalls[0].name).to.equal('NAVIGATE_START');
+            expect(mockContext.dispatchCalls[0].payload.url).to.equal('/withParams/5');
+            expect(mockContext.dispatchCalls[1].name).to.equal('NAVIGATE_SUCCESS');
+            expect(mockContext.dispatchCalls[1].payload.get('url')).to.equal('/withParams/5');
             done();
         });
     });
