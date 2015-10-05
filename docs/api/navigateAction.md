@@ -21,5 +21,5 @@ If a route is successfully matched, `navigateAction` will first dispatch a `NAVI
 | routeName  | Not used if `url` is specified. This is the name of the target route, which should be defined in your app's routes. |
 | params     | Parameters parsed from the route. If `url` prop is not available, `params` object will be used together with `routeName` to generate the href for the link. |
 | query      | Query parameters parsed from the URL. Note that if a query parameter occurs multiple times, the value in this hash will be an array. |
-| config     | The configuation for the route.         |
+| config     | The configuration for the route.         |
 | navigate   | The payload passed to `navigateAction`. |
