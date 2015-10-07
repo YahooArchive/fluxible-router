@@ -5,6 +5,7 @@
 ### Breaking Changes
 
  * Upgraded to React 0.14, breaking compatibility with older versions of React
+ * Removed dependency on `Object.assign` library, must be polyfilled
  
 ### Features
 
