@@ -40,6 +40,10 @@ $ npm install --save fluxible-router
 * [Mozilla Developer Network Array.prototype.reduce polyfill](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce#Polyfill)
 * [Mozilla Developer Network Array.prototype.map polyfill](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map#Polyfill)
 
+`Object.assign`
+
+ * [object.assign](https://www.npmjs.com/package/object.assign) or [es6-shim](https://github.com/paulmillr/es6-shim)
+
 You can also look into this [polyfill.io polyfill service](https://cdn.polyfill.io/v1/).
 
 ## Compatible React Versions
