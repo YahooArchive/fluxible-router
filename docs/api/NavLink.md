@@ -21,7 +21,7 @@ in navigation events.
 
 Here are two examples of generating `NavLink` using `href` property, and using `routeName` property.  Using `href` property is better than using `routeName`, because:
 
-* Using `href` makes your code more readible, as it shows exactly how the `href` is generated.
+* Using `href` makes your code more readable, as it shows exactly how the `href` is generated.
 * Using `routeName` allows generating the `href` from the `routeName` and `navParams` props. Does not support querystring or hash fragment.
 
 ```js
