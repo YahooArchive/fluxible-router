@@ -14,7 +14,7 @@ describe('navigateAction', function () {
         home: {
             method: 'get',
             path: '/'
-        },        
+        },
         withParams: {
             method: 'get',
             path: '/withParams/:id'
@@ -24,6 +24,13 @@ describe('navigateAction', function () {
             path: '/action',
             action: function (context, payload, done) {
                 done();
+            }
+        },
+        slower_action: {
+            method: 'get',
+            path: '/slower_action',
+            action: function (context, payload, done) {
+                setTimeout(done, 10);
             }
         },
         fail: {
@@ -133,6 +140,21 @@ describe('navigateAction', function () {
             expect(mockContext.executeActionCalls[0].payload.get('url')).to.equal('/action');
             done();
         });
+    });
+
+    it('should not dispatch failure or success for actions slower than subsequent actions', function (done) {
+        navigateAction(mockContext, {
+            url: '/slower_action'
+        }, function(err) {
+            expect(mockContext.dispatchCalls.length).to.equal(3);
+            expect(mockContext.dispatchCalls[0].payload.url).to.equal('/slower_action'); // start
+            expect(mockContext.dispatchCalls[1].payload.url).to.equal('/action'); // start
+            expect(mockContext.dispatchCalls[2].payload.get('url')).to.equal('/action'); // success
+            done();
+        });
+        navigateAction(mockContext, {
+            url: '/action'
+        }, new Function);
     });
 
     it('should call execute action if there is an action as a string', function (done) {
