@@ -128,6 +128,34 @@ describe('History', function () {
             win.history.state.origUrl = 'https://foo.com:4080/';
             expect(history.getUrl()).to.equal('/');
         });
+        it('has pushState, should remove baseURI from window.location.pathname', function () {
+            var win = _.extend(windowMock.HTML5, {
+                history: {
+                    state: {}
+                },
+                location: {
+                    protocol: 'https:',
+                    host: 'foo.com:4080',
+                    pathname: '/base/path/to/page',
+                    search: '',
+                    hash: ''
+                },
+                document: {
+                    baseURI: 'https://foo.com:4080/base/'
+                }
+            });
+            var history = new History({win: win});
+
+            expect(history.getUrl()).to.equal('/path/to/page');
+
+            win.document.baseURI = 'https://foo.com:4080/base/long/';
+            win.location.pathname = '/base/long/';
+            expect(history.getUrl()).to.equal('/');
+
+            win.document.baseURI = 'https://foo.com:4080/base/long/';
+            win.location.pathname = '/base/long/path/to/page';
+            expect(history.getUrl()).to.equal('/path/to/page');
+        });
         it ('has pushState with query', function () {
             var win = _.extend(windowMock.HTML5, {
                 location: {
