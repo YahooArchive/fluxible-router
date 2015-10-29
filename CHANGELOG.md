@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.3.1
+
+### Features
+
+ * [#97] Add handling for pre-render popstate events
+
 ## 0.3.0
 
 ### Breaking Changes
