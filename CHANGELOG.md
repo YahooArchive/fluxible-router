@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.3.2
+
+### Features
+
+ * [#99] Fix rehydrate store for POST routes (andersonba)
+
 ## 0.3.1
 
 ### Features
