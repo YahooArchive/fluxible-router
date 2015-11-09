@@ -58,6 +58,10 @@ describe('RouteStore', function () {
             foo: {
                 path: '/foo',
                 method: 'get'
+            },
+            bar: {
+              path: '/bar',
+              method: 'post'
             }
         };
         beforeEach(function () {
@@ -92,6 +96,21 @@ describe('RouteStore', function () {
                 expect(newStore.getCurrentNavigate()).to.deep.equal({
                     url: '/foo',
                     method: 'get'
+                });
+                expect(newStore._routes).to.deep.equal(routes);
+            });
+
+            it('should rehydrate POST routes correctly', function() {
+                var newStore = new StaticRouteStore();
+                newStore.rehydrate({
+                    currentUrl: '/bar',
+                    currentNavigate: { url: '/bar', method: 'post' },
+                    routes: routes
+                });
+                expect(newStore.getCurrentRoute()).to.be.an('object');
+                expect(newStore.getCurrentNavigate()).to.deep.equal({
+                    url: '/bar',
+                    method: 'post'
                 });
                 expect(newStore._routes).to.deep.equal(routes);
             });
