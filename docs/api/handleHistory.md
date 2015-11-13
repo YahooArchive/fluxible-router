@@ -21,7 +21,7 @@ var NavLink = require('fluxible-router').NavLink;
 var AppComponent = React.createClass({
     render: function () {
         // Get the handler from the current route which is passed in as prop
-        var Handler = this.props.currentRoute.get('handler');
+        var Handler = this.props.currentRoute.handler;
 
         return (
             <div>
