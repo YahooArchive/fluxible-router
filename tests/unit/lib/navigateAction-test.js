@@ -96,6 +96,7 @@ describe('navigateAction', function () {
     it('should include navigate object on route match', function (done) {
         var url = '/';
         navigateAction(mockContext, {
+            transactionId: 'foo',
             url: url,
             someKey1: 'someData',
             someKey2: {
@@ -106,7 +107,12 @@ describe('navigateAction', function () {
             expect(mockContext.dispatchCalls.length).to.equal(2);
             expect(mockContext.dispatchCalls[0].name).to.equal('NAVIGATE_START');
             var route = mockContext.getStore('RouteStore').getCurrentRoute();
-            expect(route.navigate).to.eql({url: url, someKey1: 'someData', someKey2: {someKey3: ['a', 'b']}}, 'navigate added to route payload for NAVIGATE_START' + JSON.stringify(route));
+            expect(route.navigate).to.eql({
+                transactionId: 'foo',
+                url: url,
+                someKey1: 'someData',
+                someKey2: {someKey3: ['a', 'b']}
+            }, 'navigate added to route payload for NAVIGATE_START' + JSON.stringify(route));
             done();
         });
     });
