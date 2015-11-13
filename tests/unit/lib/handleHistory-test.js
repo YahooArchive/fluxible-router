@@ -131,7 +131,7 @@ describe('handleHistory', function () {
                         render: function () {
                             rendered = true;
                             expect(this.props.currentRoute).to.be.an('object');
-                            expect(this.props.currentRoute.get('url')).to.equal('/foo');
+                            expect(this.props.currentRoute.url).to.equal('/foo');
                             return null;
                         }
                     });
