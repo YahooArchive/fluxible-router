@@ -50,6 +50,10 @@ describe('RouteStore', function () {
                 expect(newStore._routes).to.equal(null);
             });
         });
+        it('should reuse static router between instances', function () {
+            var newStore = new StaticRouteStore();
+            expect(newStore._router).to.equal(routeStore._router);
+        });
     });
 
     describe('withoutStaticRoutes', function () {
