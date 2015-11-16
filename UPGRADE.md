@@ -1,5 +1,12 @@
 # Upgrade Guide
 
+## 0.3.x to 0.4.x
+
+The `RouteStore`s `currentRoute` is no longer an immutable.js object. 
+Instead, the route is a plain object that follows the same structure as defined
+in the routes. Any usage of `route.get('foo')` will no longer work and should 
+switch to using `route.foo`.
+
 ## 0.2.x to 0.3.x
 
 Upgrade React to 0.14. See https://facebook.github.io/react/blog/2015/09/10/react-v0.14-rc1.html

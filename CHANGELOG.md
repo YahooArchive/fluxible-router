@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.4.0
+
+### Features
+
+ * [#102] Immutable.js dependency has been removed to reduce k-weight
+ * [#103] Navigation uses transaction IDs to ensure correct handling of success/failure
+ * [#104] Router instance with static routes is reused between requests
+
 ## 0.3.2
 
 ### Features
