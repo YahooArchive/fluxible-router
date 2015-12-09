@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.4.1
+
+### Features
+
+ * [#107] Fix "nav.params is not an object" error (geta6)
+
 ## 0.4.0
 
 ### Features
