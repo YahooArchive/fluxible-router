@@ -1,5 +1,13 @@
 # Upgrade Guide
 
+## 0.2.x to 0.3.x
+
+Upgrade React to 0.14. See https://facebook.github.io/react/blog/2015/09/10/react-v0.14-rc1.html
+
+## 0.1.x to 0.2.x
+
+Upgrade Fluxible to 0.5.x.
+
 ## `flux-router-component` to `fluxible-router`
 
 Be sure to read the [quick start doc](https://github.com/yahoo/fluxible-router/blob/master/docs/quick-start.md). Here we'll be covering the logistical aspects of updating existing apps.

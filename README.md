@@ -26,7 +26,7 @@ $ npm install --save fluxible-router
  * Follows Flux flow
  * Higher order components for handling [history](https://github.com/yahoo/fluxible-router/blob/master/docs/api/handleHistory.md) and [routes](https://github.com/yahoo/fluxible-router/blob/master/docs/api/handleRoute.md)
  * [`navigateAction`](https://github.com/yahoo/fluxible-router/blob/master/docs/api/navigateAction.md) for changing routes
- * Updated for React 0.13
+ * Updated for React 0.14
 
 ## Required Polyfills
 
@@ -40,29 +40,18 @@ $ npm install --save fluxible-router
 * [Mozilla Developer Network Array.prototype.reduce polyfill](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce#Polyfill)
 * [Mozilla Developer Network Array.prototype.map polyfill](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map#Polyfill)
 
+`Object.assign`
+
+ * [object.assign](https://www.npmjs.com/package/object.assign) or [es6-shim](https://github.com/paulmillr/es6-shim)
+
 You can also look into this [polyfill.io polyfill service](https://cdn.polyfill.io/v1/).
-
-## onbeforeunload Support
-
-The `History` API does not allow `popstate` events to be cancelled, which results in `window.onbeforeunload()` methods not being triggered.  This is problematic for users, since application state could be lost when they navigate to a certain page without knowing the consequences.
-
-Our solution is to check for a `window.onbeforeunload()` method, prompt the user with `window.confirm()`, and then navigate to the correct route based on the confirmation.  If a route is cancelled by the user, we reset the page URL back to the original URL by using  the `History` `pushState()` method.
-
-To implement the `window.onbeforeunload()` method, you need to set it within the components that need user verification before leaving a page.  Here is an example:
-
-```javascript
-componentDidMount: function() {
-  window.onbeforeunload = function () {
-    return 'Make sure to save your changes before leaving this page!';
-  }
-}
-```
 
 ## Compatible React Versions
 
 | Compatible React Version | fluxible-router Version |
 |--------------------------|-------------------------------|
-| 0.13 | >= 0.1.x |
+| 0.14 | >= 0.3.x |
+| 0.13 | <= 0.2.x |
 
 ## License
 This software is free to use under the Yahoo Inc. BSD license.
